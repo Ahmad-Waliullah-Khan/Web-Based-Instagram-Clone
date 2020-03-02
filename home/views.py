@@ -13,7 +13,7 @@ def home(request):
     photos_list = Gallery.objects.all()
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(photos_list, 1)
+    paginator = Paginator(photos_list, 30) #loads 30 images per page
     try:
         photos = paginator.page(page)
     except PageNotAnInteger:
