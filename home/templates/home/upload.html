@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Photo App | Upload</title>
+
+    <link href="{% static "css/dropzone.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/basic.min.css" %}" rel="stylesheet">
+
+    <link href="{% static "css/home.min.css" %}" rel="stylesheet">
+
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="{% url 'home:home' %}">Photo App</a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'home:home' %}">Gallery</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <br>
+    <br>
+    <br>
+    <hr>
+
+    <form action="#"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
+
+  </body>
+  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "vendor/dropzone.min.js" %}"></script>
+  <script src = "{% static "js/dropzone-amd-module.min.js" %}"></script>
+
+</html>

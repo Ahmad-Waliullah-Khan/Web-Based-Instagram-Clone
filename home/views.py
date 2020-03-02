@@ -9,7 +9,7 @@ from gallery.models import Gallery
 View for loading the gallery
 --------------------------------------------------------------------------------
 """
-def gallery(request):
+def home(request):
     photos_list = Gallery.objects.all()
 
     page = request.GET.get('page', 1)
@@ -34,4 +34,7 @@ View for uploading photo
 """
 def upload(request):
 
-    pass
+    return render(
+        request, 'home/upload.html',
+        {}
+    )
