@@ -68,22 +68,28 @@
       </div>
 
       <!-- gallery Grid Items -->
-      <div class="row">
-        {% for photo in photos %}
-        <!-- photo Item  -->
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <i class="fas fa-plus fa-3x"></i>
+      <div class="infinite-container">
+        <div class="row">
+
+          {% for photo in photos %}
+          <!-- photo Item  -->
+
+            <div class="col-md-6 col-lg-4">
+              <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                  <div class="portfolio-item-caption-content text-center text-white">
+                    <i class="fas fa-plus fa-3x"></i>
+                  </div>
+                </div>
+                <div class="infinite-item">
+                  <img class="img-fluid" src='/media/{{photo.photo}}' title="{{photo.created_at}}">
+                </div>
               </div>
             </div>
-            <img class="img-fluid" src='/media/{{photo.photo}}' title="{{photo.created_at}}">
           </div>
-        </div>
         {% endfor %}
-
       </div>
+
       <!-- /.row -->
 
     </div>
@@ -91,31 +97,17 @@
 
   <div class="container">
     {% if photos.has_other_pages %}
-      <ul class="pagination">
-        {% if photos.has_previous %}
-          <li><a href="?page={{ photos.previous_page_number }}">&laquo;</a></li>
-        {% else %}
-          <li class="disabled"><span>&laquo;</span></li>
-        {% endif %}
-        {% for i in photos.paginator.page_range %}
-          {% if photos.number == i %}
-            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-          {% else %}
-            <li><a href="?page={{ i }}">{{ i }}</a></li>
-          {% endif %}
-        {% endfor %}
-        {% if photos.has_next %}
-          <li><a href="?page={{ photos.next_page_number }}">&raquo;</a></li>
-        {% else %}
-          <li class="disabled"><span>&raquo;</span></li>
-        {% endif %}
-      </ul>
+      {% if photos.has_next %}
+        <a class="infinite-more-link" href="?page={{ photos.next_page_number }}">More</a>
+      {% endif %}
     {% endif %}
+  </div>
 
+  <div class="loading" style="display: none;">
+    Loading...
   </div>
 
   <!-- Footer -->
-
   <!-- Copyright Section -->
   <section class="copyright py-4 text-center text-white">
     <div class="container">
@@ -379,6 +371,21 @@
 
   <!-- Custom scripts for this template -->
   <script src="{% static "js/home.min.js" %}"></script>
+
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
 
 </body>
 
