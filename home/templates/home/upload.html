@@ -74,6 +74,11 @@
                 console.log( responseText );
                 alert(responseText);
             });
+            this.on("error", function(file, response) {
+                // do stuff here.
+                alert(response);
+
+            });
         }
     };
   };

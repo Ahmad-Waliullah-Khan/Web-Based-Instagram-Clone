@@ -33,67 +33,93 @@ def upload_photo(request):
                         try:
                             gallery.save()
                         except:
-                            return JsonResponse('Error uploading photo', safe=False)
+                            return JsonResponse(
+                                'Error uploading photo',
+                                safe=False,
+                                status=400
+                            )
 
                         # resize the image keeping aspect ratio
-                        basewidth = 1200
-                        img = Image.open(gallery.photo.path)
-                        wpercent = (basewidth/float(img.size[0]))
-                        hsize = int((float(img.size[1])*float(wpercent)))
-                        img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                        try:
+                            basewidth = 1200
+                            img = Image.open(gallery.photo.path)
+                            wpercent = (basewidth/float(img.size[0]))
+                            hsize = int((float(img.size[1])*float(wpercent)))
+                            img = img.resize((basewidth,hsize), Image.ANTIALIAS)
 
-                        filename = get_file_path(gallery, gallery.photo.path)
+                            filename = get_file_path(gallery, gallery.photo.path)
 
-                        # save the resized image temprarily
-                        img.save('media/'+filename)
+                            # save the resized image temprarily
+                            img.save('media/'+filename)
 
-                        # update the database with new image path
-                        Gallery.objects.filter(pk=gallery.id).update(
-                            photo=filename
-                        )
+                            # update the database with new image path
+                            Gallery.objects.filter(pk=gallery.id).update(
+                                photo=filename
+                            )
+
+                        except:
+                            return JsonResponse(
+                                    'Error resizing photo',
+                                    safe=False,
+                                    status=400
+                                )
 
                         # resize the image to shorter edge of 240px, keeping
                         # aspect ratio intact
-                        basewidth = 240
-                        img = Image.open(gallery.photo.path)
-                        wpercent = (basewidth/float(img.size[0]))
-                        hsize = int((float(img.size[1])*float(wpercent)))
-                        img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                        try:
+                            basewidth = 240
+                            img = Image.open(gallery.photo.path)
+                            wpercent = (basewidth/float(img.size[0]))
+                            hsize = int((float(img.size[1])*float(wpercent)))
+                            img = img.resize((basewidth,hsize), Image.ANTIALIAS)
 
-                        filename = get_file_path(gallery, gallery.photo.path)
+                            filename = get_file_path(gallery, gallery.photo.path)
 
-                        # save the resized image temprarily
-                        img.save('media/'+filename)
+                            # save the resized image temprarily
+                            img.save('media/'+filename)
 
-                        # update the database with new image path
-                        Gallery.objects.filter(pk=gallery.id).update(
-                            photo_size_240=filename
-                        )
+                            # update the database with new image path
+                            Gallery.objects.filter(pk=gallery.id).update(
+                                photo_size_240=filename
+                            )
+                        except:
+                            return JsonResponse(
+                                    'Error resizing photo',
+                                    safe=False,
+                                    status=400
+                                )
 
                         # resize the image to shorter edge of 720px, keeping
                         # aspect ratio intact
-                        basewidth = 720
-                        img = Image.open(gallery.photo.path)
-                        wpercent = (basewidth/float(img.size[0]))
-                        hsize = int((float(img.size[1])*float(wpercent)))
-                        img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                        try:
+                            basewidth = 720
+                            img = Image.open(gallery.photo.path)
+                            wpercent = (basewidth/float(img.size[0]))
+                            hsize = int((float(img.size[1])*float(wpercent)))
+                            img = img.resize((basewidth,hsize), Image.ANTIALIAS)
 
-                        filename = get_file_path(gallery, gallery.photo.path)
+                            filename = get_file_path(gallery, gallery.photo.path)
 
-                        # save the resized image temprarily
-                        img.save('media/'+filename)
+                            # save the resized image temprarily
+                            img.save('media/'+filename)
 
-                        # update the database with new image path
-                        Gallery.objects.filter(pk=gallery.id).update(
-                            photo_size_720=filename
-                        )
-
+                            # update the database with new image path
+                            Gallery.objects.filter(pk=gallery.id).update(
+                                photo_size_720=filename
+                            )
+                        except:
+                            return JsonResponse(
+                                    'Error resizing photo',
+                                    safe=False,
+                                    status=400
+                                )
+                                
                         # remove tempoary resized image
                         os.remove(gallery.photo.path)
 
-                        return JsonResponse('Photo(s) uploaded successfully!', safe=False)
+                        return JsonResponse('Photo(s) uploaded successfully!', safe=False, status=200)
                     else:
-                        return JsonResponse('File must be a png or jpeg image.', safe=False)
+                        return JsonResponse('File must be a png or jpeg image.', safe=False, status=400)
 
 """
 ------------------------------------------
