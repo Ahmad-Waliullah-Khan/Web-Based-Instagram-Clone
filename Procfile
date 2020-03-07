@@ -1,1 +1,2 @@
-web: gunicorn photos.wsgi --log-file -
+web: gunicorn photos.wsgi --log-file -;
+python manage.py collectstatic --noinput;
