@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+import django_heroku
 
 import os
 
@@ -129,7 +130,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-BASE_DIR   =   os.path.join(os.path.abspath(__file__))
+PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
 STATIC_ROOT  =  'assets/'
 STATIC_URL = '/static/'
 
@@ -145,3 +146,5 @@ MEDIA_URL = '/media/'
 import dj_database_url
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+django_heroku.settings(locals())
