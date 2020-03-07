@@ -25,7 +25,7 @@ SECRET_KEY = 'mwfbhx(_7qahrx4-=%ce0pl6(y71pu3sl!yg_-p981^@j-ti8*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['photos.herokuapp.com']
+ALLOWED_HOSTS = ['django-advance-photos-app.herokuapp.com']
 
 
 # Application definition
