@@ -100,11 +100,9 @@
 
   $(document).ready(function(){
 
-    $('#lightGallery').lightGallery({
+    var gallery = $('#lightGallery').lightGallery({
       subHtmlSelectorRelative: true
     });
-
-    var gallery = $('#lightGallery').lightGallery({});
 
      var infinite = new Waypoint.Infinite({
        element: document.querySelector('.infinite-container'),
@@ -117,7 +115,9 @@
        onAfterPageLoad: function ($items) {
          $('.loading').hide();
          gallery.data('lightGallery').destroy(true);
-         gallery = $(".infinite-container").lightGallery({});
+         gallery = $(".infinite-container").lightGallery({
+           subHtmlSelectorRelative: true
+         });
        }
      });
 });
