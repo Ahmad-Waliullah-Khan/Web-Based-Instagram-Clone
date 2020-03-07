@@ -4,4 +4,7 @@ from .models import Gallery
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-    list_display = ('photo', 'caption', 'created_at', 'updated_at',)
+    list_display = (
+        'photo', 'photo_size_240', 'photo_size_720', 'caption',
+        'created_at', 'updated_at',
+    )

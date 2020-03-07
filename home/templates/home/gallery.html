@@ -65,7 +65,7 @@
     {% if photos %}
       {% for photo in photos %}
       <a class="infinite-item" href="/media/{{ photo.photo }}" data-sub-html=".caption">
-        <img height="300px" width="300px" class="thumbnail" src="/media/{{ photo.photo }}" />
+        <img class="thumbnail" src="/media/{{ photo.photo_size_240 }}" />
         <div class="caption" style="display:none">
           <p>{{photo.caption}}<br/>Uploaded on : {{photo.created_at|date}}</p>
         </div>
