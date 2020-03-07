@@ -61,8 +61,11 @@
 
     {% if photos %}
       {% for photo in photos %}
-      <a class="infinite-item" href="/media/{{ photo.photo }}">
+      <a class="infinite-item" href="/media/{{ photo.photo }}" data-sub-html=".caption">
         <img height="300px" width="300px" class="thumbnail" src="/media/{{ photo.photo }}" />
+        <div class="caption" style="display:none">
+          <p>{{photo.caption}}<br/>Uploaded on : {{photo.created_at|date}}</p>
+        </div>
       </a>
       {% endfor %}
     {% else %}
@@ -97,7 +100,9 @@
 
   $(document).ready(function(){
 
-    $('#lightGallery').lightGallery({});
+    $('#lightGallery').lightGallery({
+      subHtmlSelectorRelative: true
+    });
 
     var gallery = $('#lightGallery').lightGallery({});
 
@@ -105,7 +110,9 @@
        element: document.querySelector('.infinite-container'),
        onBeforePageLoad: function () {
          $('.loading').show();
-         $('#lightGallery').lightGallery({});
+         $('#lightGallery').lightGallery({
+           subHtmlSelectorRelative: true
+         });
        },
        onAfterPageLoad: function ($items) {
          $('.loading').hide();

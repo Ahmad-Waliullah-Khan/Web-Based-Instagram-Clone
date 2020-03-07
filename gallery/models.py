@@ -21,6 +21,11 @@ Model to manage photo gallery
 class Gallery(models.Model):
 
     photo = models.FileField(upload_to=get_file_path,)
+    caption = models.CharField(
+                        max_length=200,
+                        null=True,
+                        blank=True,
+                    )
     user = models.ForeignKey(
                         User, on_delete=models.CASCADE,
                         related_name='photos',
