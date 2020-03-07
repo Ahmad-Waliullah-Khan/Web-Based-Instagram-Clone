@@ -21,6 +21,7 @@ Model to manage photo gallery
 class Gallery(models.Model):
 
     photo = models.FileField(upload_to=get_file_path,)
+    thumb = models.FileField(upload_to=get_file_path,)
     caption = models.CharField(
                         max_length=200,
                         null=True,
