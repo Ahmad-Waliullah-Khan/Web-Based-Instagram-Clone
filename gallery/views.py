@@ -21,6 +21,7 @@ def upload_photo(request):
             for field in request.FILES.keys():
                 for formfile in request.FILES.getlist(field):
 
+                    # check for image type
                     if is_valid_mime(formfile):
 
                         gallery = Gallery(
@@ -28,11 +29,13 @@ def upload_photo(request):
                                 photo=formfile,
                             )
 
+                        # save original raw image temprarily
                         try:
                             gallery.save()
                         except:
                             return JsonResponse('Error uploading photo', safe=False)
 
+                        # resize the image keeping aspect ratio
                         basewidth = 1200
                         img = Image.open(gallery.photo.path)
                         wpercent = (basewidth/float(img.size[0]))
@@ -41,12 +44,16 @@ def upload_photo(request):
 
                         filename = get_file_path(gallery, gallery.photo.path)
 
+                        # save the resized image temprarily
                         img.save('media/'+filename)
 
+                        # update the database with new image path
                         Gallery.objects.filter(pk=gallery.id).update(
                             photo=filename
                         )
 
+                        # resize the image to shorter edge of 240px, keeping
+                        # aspect ratio intact
                         basewidth = 240
                         img = Image.open(gallery.photo.path)
                         wpercent = (basewidth/float(img.size[0]))
@@ -55,13 +62,16 @@ def upload_photo(request):
 
                         filename = get_file_path(gallery, gallery.photo.path)
 
+                        # save the resized image temprarily
                         img.save('media/'+filename)
 
+                        # update the database with new image path
                         Gallery.objects.filter(pk=gallery.id).update(
                             photo_size_240=filename
                         )
 
-
+                        # resize the image to shorter edge of 720px, keeping
+                        # aspect ratio intact
                         basewidth = 720
                         img = Image.open(gallery.photo.path)
                         wpercent = (basewidth/float(img.size[0]))
@@ -70,12 +80,15 @@ def upload_photo(request):
 
                         filename = get_file_path(gallery, gallery.photo.path)
 
+                        # save the resized image temprarily
                         img.save('media/'+filename)
 
+                        # update the database with new image path
                         Gallery.objects.filter(pk=gallery.id).update(
                             photo_size_720=filename
                         )
 
+                        # remove tempoary resized image
                         os.remove(gallery.photo.path)
 
                         return JsonResponse('Photo(s) uploaded successfully!', safe=False)
@@ -88,6 +101,10 @@ Method to checks for mime type
 ------------------------------------------
 """
 def is_valid_mime(in_memory_file):
+    """
+    Checks file type for png or jpeg and returns True or False
+    """
+
     mime = magic.from_buffer(in_memory_file.read(), mime=True)
     if mime == 'image/jpeg' or mime == 'image/png':
         return True

@@ -11,7 +11,6 @@ View for loading the gallery
 """
 def home(request):
     photos_list = Gallery.objects.all()
-    print('loaded photos : ', photos_list )
 
     page = request.GET.get('page', 1)
     paginator = Paginator(photos_list, 3) #loads 30 images per page
