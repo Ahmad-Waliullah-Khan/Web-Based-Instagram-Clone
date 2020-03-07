@@ -26,14 +26,14 @@ class Gallery(models.Model):
                         null=True,
                         blank=True,
                     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
                         User, on_delete=models.CASCADE,
                         related_name='photos',
                         null=True,
                         blank=True,
                     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'photos'
@@ -42,4 +42,4 @@ class Gallery(models.Model):
         ordering = ['-updated_at']
 
     def __str__(self):
-        return "Uploaded on : " + str(self.created_at)
+        return str(self.caption)+ " | Uploaded on : " + str(self.created_at)

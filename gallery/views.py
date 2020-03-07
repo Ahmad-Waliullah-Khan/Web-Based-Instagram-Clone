@@ -1,23 +1,16 @@
-from rest_framework.views import APIView
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views import View
 
-from .serializers import PhotosSerializer
 from .models import Gallery
 
-
-class PhotoList(APIView):
-    def get(self, request, format=None):
-        serializer = PhotosSerializer()
-        if serializer.is_valid():
-            serializer.save()
-            return Response({serializer.data}, status=status.HTTP_200_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class PhotosUpload(APIView):
-    def post(self, request, format=None):
-        serializer = PhotosSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def upload_photo(request):
+    if request.method == 'POST':
+            for field in request.FILES.keys():
+                for formfile in request.FILES.getlist(field):
+                    gallery = Gallery(caption=formfile, photo=formfile)
+                    try:
+                        gallery.save()
+                        return JsonResponse('Photo(s) uploaded successfully!', safe=False)
+                    except:
+                        return JsonResponse('Error uploading photo', safe=False)

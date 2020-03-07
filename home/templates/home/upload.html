@@ -5,40 +5,80 @@
     <meta charset="utf-8">
     <title>Photo App | Upload</title>
 
+    <!-- dropzone css -->
     <link href="{% static "css/dropzone.min.css" %}" rel="stylesheet">
     <link href="{% static "css/basic.min.css" %}" rel="stylesheet">
 
-    <link href="{% static "css/home.min.css" %}" rel="stylesheet">
+    <link href="{% static "vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- bootstrap styling -->
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
 
   </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="{% url 'home:home' %}">Photo App</a>
-        <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'home:home' %}">Gallery</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<body>
 
-    <br><br><br><hr>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<a class="navbar-brand" href="{% url 'home:home' %}">Photo App</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link pull-right" href="{% url 'home:home' %}">Gallery</a>
+    </li>
+  </ul>
+</div>
+</nav>
+<hr>
 
-    <form action="#"
-      class="dropzone"
-      id="my-awesome-dropzone"></form>
+<div class="container">
+  <form action="{% url 'gallery:upload-photos' %}" method="post" enctype="multipart/form-data" class="dropzone"
+    id="my-awesome-dropzone">
+    {% csrf_token %}
+      <p>{{ form.non_field_errors }}</p>
+      <p>{{ form.errors }}</p>
+      {% for field in postForm %}
+        {{ field }} <br />
+      {% endfor %}
+      <div class="fallback">
+           <input name="photo" type="file" multiple />
+       </div>
+  </form>
+</div>
 
-  </body>
-  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
-  <script src="{% static "vendor/dropzone.min.js" %}"></script>
-  <script src = "{% static "js/dropzone-amd-module.min.js" %}"></script>
+
+
+</body>
+
+  <!-- dropzone JavaScript -->
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
+
+  <script type="text/javascript">
+  window.onload = function() {
+    Dropzone.options.myDropzone ={
+        paramName: "photo", // name of input
+        autoProcessQueue : true,
+        parallelUploads: 1,
+
+        init :  function (){
+            this.on( "success", function( file, responseText){
+                // event launched at the end of uploading images queued
+                console.log( responseText );
+                alert(responseText);
+            });
+        }
+    };
+  };
+    </script>
 
 </html>
