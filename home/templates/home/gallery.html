@@ -25,6 +25,9 @@
   <!-- lightgallery -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.2/css/lightgallery.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.2/js/lightgallery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-thumbnail/1.1.0/lg-thumbnail.min.js">
+
+  </script>
 
   <!-- waypoints -->
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
@@ -101,7 +104,9 @@
   $(document).ready(function(){
 
     var gallery = $('#lightGallery').lightGallery({
-      subHtmlSelectorRelative: true
+      subHtmlSelectorRelative: true,
+      thumbnail:true,
+      showThumbByDefault: false,
     });
 
      var infinite = new Waypoint.Infinite({
@@ -109,14 +114,18 @@
        onBeforePageLoad: function () {
          $('.loading').show();
          $('#lightGallery').lightGallery({
-           subHtmlSelectorRelative: true
+           subHtmlSelectorRelative: true,
+           thumbnail:true,
+           showThumbByDefault: false,
          });
        },
        onAfterPageLoad: function ($items) {
          $('.loading').hide();
          gallery.data('lightGallery').destroy(true);
          gallery = $(".infinite-container").lightGallery({
-           subHtmlSelectorRelative: true
+           subHtmlSelectorRelative: true,
+           thumbnail:true,
+           showThumbByDefault: false,
          });
        }
      });
