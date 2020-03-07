@@ -114,8 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # S3 Bucket settings
 AWS_QUERYSTRING_AUTH = False
-AWS_ACCESS_KEY_ID = os.environ['AKIAIFPGLNVSMD4ALNUA']
-AWS_SECRET_ACCESS_KEY = os.environ['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']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = os.environ['django-advance-photos-app']
 MEDIA_URL = 'http://%s.s3.amazonaws.com/media/' % django-advance-photos-app
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
