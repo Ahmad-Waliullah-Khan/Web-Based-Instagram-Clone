@@ -1,2 +1,3 @@
-web: gunicorn photos.wsgi --log-file -;
-python manage.py collectstatic --noinput;
+web: gunicorn photos.wsgi:application --log-file - --log-level debug
+python manage.py collectstatic --noinput
+manage.py migrate
