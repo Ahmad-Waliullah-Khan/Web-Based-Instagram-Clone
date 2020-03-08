@@ -8,3 +8,5 @@ class GalleryAdmin(admin.ModelAdmin):
         'photo', 'photo_size_240', 'photo_size_720', 'caption',
         'created_at', 'updated_at',
     )
+    fields = ['photo', 'photo_size_240', 'photo_size_720', 'caption',
+    'created_at', 'updated_at',]

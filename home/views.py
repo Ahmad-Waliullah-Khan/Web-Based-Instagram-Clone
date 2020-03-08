@@ -10,7 +10,7 @@ View for loading the gallery
 --------------------------------------------------------------------------------
 """
 def home(request):
-    photos_list = Gallery.objects.all()
+    photos_list = Gallery.objects.order_by('-created_at')
 
     page = request.GET.get('page', 1)
     paginator = Paginator(photos_list, 3) #loads 30 images per page
@@ -20,7 +20,6 @@ def home(request):
         photos = paginator.page(1)
     except EmptyPage:
         photos = paginator.page(paginator.num_pages)
-
 
     return render(
         request, 'home/gallery.html',

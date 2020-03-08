@@ -57,21 +57,28 @@
 <!-- gallery  -->
 <div class="container">
 
-  <div id="lightGallery" class="infinite-container">
+  {% if photos %}
+    {% regroup photos by created_at|date:"D, M, Y" as photos_by_day %}
+      {% for group in photos_by_day %}
+          <h5>Uploaded on {{ group.grouper }} ({{group.grouper|length}})</h5>
+          <hr>
+          <div id="lightGallery" class="infinite-container">
+            {% for photo in group.list %}
 
-    {% if photos %}
-      {% for photo in photos %}
-      <a class="infinite-item" href="{{ photo.photo.url }}" data-sub-html=".caption">
-        <img class="img-thumbnail rounded" src="{{ photo.photo_size_240.url }}" />
-        <div class="caption" style="display:none">
-          <p>{{photo.caption}}<br/>Uploaded on : {{photo.created_at|date}}</p>
-        </div>
-      </a>
-      {% endfor %}
-    {% else %}
-      <p>No photo available.</p>
-    {% endif %}
-  </div>
+              <a class="infinite-item" href="{{ photo.photo.url }}" data-sub-html=".caption">
+                <img class="img-thumbnail rounded" src="{{ photo.photo_size_240.url }}" />
+                <div class="caption" style="display:none">
+                  <p>{{photo.caption}}<br/>Uploaded on : {{photo.created_at|date}}</p>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+
+    {% endfor %}
+  {% else %}
+    <p>No photo available.</p>
+  {% endif %}
+
 
 </div>
 
