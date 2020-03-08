@@ -1,19 +1,17 @@
-from django.shortcuts import render, redirect
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import permission_required, login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from gallery.models import Gallery
+from .forms import LoginForm
 
-"""
---------------------------------------------------------------------------------
-View for loading the gallery
---------------------------------------------------------------------------------
-"""
+#===============================================================================
+# home
+#===============================================================================
 @login_required(login_url='/')
 def home(request):
     photos_list = Gallery.objects.order_by('-created_at')
@@ -32,11 +30,10 @@ def home(request):
         {'photos' : photos,}
     )
 
-"""
---------------------------------------------------------------------------------
-View for uploading photo
---------------------------------------------------------------------------------
-"""
+
+#===============================================================================
+# upload
+#===============================================================================
 @login_required(login_url='/')
 def upload(request):
 
@@ -45,48 +42,26 @@ def upload(request):
         {}
     )
 
-"""
---------------------------------------------------------------------------------
-Index
---------------------------------------------------------------------------------
-"""
+
+#===============================================================================
+# index
+#===============================================================================
 def index(request):
-    if not request.user.is_authenticated:
-        return render(
-            request, 'home/index.html',
-        )
-    else:
+    
+    form = LoginForm(request.POST or None)
+    if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('home:gallery'))
-
-"""
---------------------------------------------------------------------------------
-Login
---------------------------------------------------------------------------------
-"""
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+    elif request.POST and form.is_valid():
+        user = form.login(request)
         if user:
-            if user.is_active:
-                login(request,user)
-                return HttpResponseRedirect(reverse('home:gallery'))
-            else:
-                return HttpResponse("Your account was inactive.")
-        else:
-            print("Someone tried to login and failed.")
-            print("They used username: {} and password: {}".format(username,password))
-            return HttpResponse("Invalid login details given")
-    else:
-        return render(request, '')
+            login(request, user)
+            return HttpResponseRedirect(reverse('home:gallery'))
+    return render(request, 'home/login.html', {'login_form': form })
 
-"""
---------------------------------------------------------------------------------
-Logout
---------------------------------------------------------------------------------
-"""
+#===============================================================================
+# user_logout
+#===============================================================================
 @login_required(login_url='/')
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('home:index'))
+    return HttpResponseRedirect(reverse('home:user_login'))

@@ -24,16 +24,22 @@
              <div class="col-md-6 col-sm-12">
                 <div class="login-form">
 
+                  {% if form.non_field_errors %}
+                    <ul class='form-errors'>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                  {% endif %}
+                  {% if form.errors %}
+                    <ul class='form-errors'>
+                      <li>{{ error }}</li>
+                    </ul>
+                  {% endif %}
+
                   <form method="post" action="{% url 'home:user_login' %}">
                     {% csrf_token %}
-                    <div class="form-group">
-                       <label>User Name</label>
-                       <input type="text" name="username" class="form-control" placeholder="User Name">
-                    </div>
-                    <div class="form-group">
-                       <label>Password</label>
-                       <input type="password" name="password" class="form-control" placeholder="Password">
-                    </div>
+                    {{login_form.as_p}}
                     <button type="submit" class="btn btn-black">Login</button>
                   </form>
 
