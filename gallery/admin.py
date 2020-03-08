@@ -6,7 +6,5 @@ from .models import Gallery
 class GalleryAdmin(admin.ModelAdmin):
     list_display = (
         'photo', 'photo_size_240', 'photo_size_720', 'caption',
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'user',
     )
-    fields = ['photo', 'photo_size_240', 'photo_size_720', 'caption',
-    'created_at', 'updated_at',]

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Photo App | Login</title>
+
+    <link href="{% static "css/login.css" %}" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  </head>
+  <body>
+
+    <div class="sidenav">
+             <div class="login-main-text">
+                <h2>Photo App<br></h2>
+                <p>Login to access.</p>
+             </div>
+          </div>
+          <div class="main">
+             <div class="col-md-6 col-sm-12">
+                <div class="login-form">
+
+                  <form method="post" action="{% url 'home:user_login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                       <label>User Name</label>
+                       <input type="text" name="username" class="form-control" placeholder="User Name">
+                    </div>
+                    <div class="form-group">
+                       <label>Password</label>
+                       <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-black">Login</button>
+                  </form>
+
+                </div>
+             </div>
+          </div>
+
+          <!-- Footer -->
+          <section class="copyright py-4 text-center text-white">
+            <div class="container">
+              <small style="color:black;">Developed by <a href="https://AhmadWKhan.com" />Ahmad W Khan</a></small>
+            </div>
+          </section>
+  </body>
+</html>

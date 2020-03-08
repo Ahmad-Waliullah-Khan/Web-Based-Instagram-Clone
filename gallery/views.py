@@ -24,6 +24,7 @@ def upload_photo(request):
                                 photo=formfile,
                                 photo_size_240=formfile,
                                 photo_size_720=formfile,
+                                user=request.user,
                             )
                             gallery.save()
                         except:
