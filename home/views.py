@@ -19,7 +19,7 @@ def home(request):
     photos_list = Gallery.objects.order_by('-created_at')
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(photos_list, 3) #loads 30 images per page
+    paginator = Paginator(photos_list, 30) #loads 30 images per page
     try:
         photos = paginator.page(page)
     except PageNotAnInteger:

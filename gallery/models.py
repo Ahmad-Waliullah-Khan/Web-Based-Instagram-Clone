@@ -51,4 +51,4 @@ class Gallery(models.Model):
         db_table = 'photos'
         verbose_name = "Photo"
         verbose_name_plural = "Photos"
-        ordering = ['-updated_at']
+        ordering = ['-created_at']
