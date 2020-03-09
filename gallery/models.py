@@ -9,9 +9,10 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django_resized import ResizedImageField
 
-"""
-Model to manage photo gallery
-"""
+
+#===============================================================================
+# Model to manange Gallery data
+#===============================================================================
 class Gallery(models.Model):
 
     photo_size_240 = ResizedImageField(size=[240, 135],
@@ -36,17 +37,17 @@ class Gallery(models.Model):
                         null=True,
                         blank=True,
                     )
-    """
-    ------------------------------------------
-    String representation of the model
-    ------------------------------------------
-    """
+    
+    #===========================================================================
+    # __str__
+    #===========================================================================
     def __str__(self):
         return str(self.caption)+ " | Uploaded on : " + str(self.created_at)
 
-    """
-    Meta Clas
-    """
+    
+    #===========================================================================
+    # Meta
+    #===========================================================================
     class Meta:
         db_table = 'photos'
         verbose_name = "Photo"

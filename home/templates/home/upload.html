@@ -1,85 +1,35 @@
+{% extends 'home/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Advance Photo App | Upload</title>
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/icons/favicon.png' %}"/>
+{% block nav %}
+  {% include 'home/navbar.html' %}
+{% endblock %}
 
-    <!-- dropzone css -->
-    <link href="{% static "css/dropzone.min.css" %}" rel="stylesheet">
+{% block content %}
+<!-- dropzone css -->
+<link href="{% static "css/dropzone.min.css" %}" rel="stylesheet">
 
-    <!-- bootstrap styling -->
-    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<!-- upload area -->
+<form action="{% url 'gallery:upload-photos' %}" method="post" enctype="multipart/form-data" class="dropzone"
+  id="my-awesome-dropzone">
+  {% csrf_token %}
+    <p>{{ form.non_field_errors }}</p>
+    <p>{{ form.errors }}</p>
+    {% for field in postForm %}
+      {{ field }} <br />
+    {% endfor %}
+    <div class="fallback">
+         <input name="photo" type="file" multiple />
+     </div>
+</form>
 
-    <!-- jQuery -->
-    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+<!-- scripts -->
+<!-- dropzone JavaScript -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script type="text/javascript">
 
-    <style media="screen">
-      .custom-navbar{box-shadow: 10px 10px 10px #eee; z-index:;background-color: #fff;}
-      .nav-link{color: #f7204e!important;}
-      .custom-toggler.navbar-toggler {border-color: rgb(247,32,78);}
-      .custom-toggler .navbar-toggler-icon {background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(247,32,78, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");}
-      .custom-toggler .navbar-toggler-icon{width: 8px!important;}
-      .custom-toggler:hover{border-color: rgb(255,255,255); background-color: #f76a88;}
-      .navbar-toggler-icon:hover{background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");}#logo_custom{margin-top: -6px;}
-      @media only screen and (max-width: 760px) { #logo_custom{width: 10%;}}
-
-    </style>
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar fixed-top navbar-expand-md custom-navbar navbar-dark">
-     <img class="navbar-brand" src="{% static 'images/icons/favicon.png' %}" id="logo_custom" width="4%"  alt="logo">
-        <button class="navbar-toggler navbar-toggler-right custom-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon "></span>
-        </button>
-          <div class="collapse navbar-collapse " id="collapsibleNavbar">
-              <ul class="navbar-nav ml-auto ">
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home:upload' %}"><b>Upload</b></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home:gallery' %}"><b>Gallery</b></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home:user_logout' %}"><b>Logout</b></a>
-                </li>
-              </ul>
-          </div>
-    </nav>
-  <br><br><br>
-  <hr>
-
-<div class="container">
-  <form action="{% url 'gallery:upload-photos' %}" method="post" enctype="multipart/form-data" class="dropzone"
-    id="my-awesome-dropzone">
-    {% csrf_token %}
-      <p>{{ form.non_field_errors }}</p>
-      <p>{{ form.errors }}</p>
-      {% for field in postForm %}
-        {{ field }} <br />
-      {% endfor %}
-      <div class="fallback">
-           <input name="photo" type="file" multiple />
-       </div>
-  </form>
-</div>
-
-</body>
-
-  <!-- dropzone JavaScript -->
-  <script src = "https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
-
-  <script type="text/javascript">
-  window.onload = function() {
+  $(document).ready(function(){
     Dropzone.options.myDropzone ={
         paramName: "photo", // name of input
         autoProcessQueue : true,
@@ -92,13 +42,15 @@
                 alert(responseText);
             });
             this.on("error", function(file, response) {
-                // do stuff here.
+                // event launched when upload fails
+                console.log(response);
                 alert(response);
 
             });
         }
     };
-  };
-    </script>
+  });
 
-</html>
+</script>
+
+{% endblock %}

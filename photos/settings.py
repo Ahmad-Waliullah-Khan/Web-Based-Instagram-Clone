@@ -154,7 +154,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
+#===============================================================================
+# AS S3 Bucket settings
+#===============================================================================
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
 if USE_S3:
