@@ -6,10 +6,13 @@ import magic
 from .models import Gallery
 
 
-"""
-View method to upload photo
-"""
+#===============================================================================
+# upload_photo
+#===============================================================================
 def upload_photo(request):
+    """
+    View method to upload photo
+    """
     if request.method == 'POST':
             for field in request.FILES.keys():
                 for formfile in request.FILES.getlist(field):
@@ -40,11 +43,10 @@ def upload_photo(request):
                             'File must be a png or jpeg image.',
                             safe=False, status=400
                         )
-"""
-------------------------------------------
-Method to checks for mime type
-------------------------------------------
-"""
+
+#===============================================================================
+# is_valid_mime
+#===============================================================================
 def is_valid_mime(in_memory_file):
     """
     Checks file type for png or jpeg and returns True or False
