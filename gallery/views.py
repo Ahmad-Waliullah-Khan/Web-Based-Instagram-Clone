@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-from django.views import View
 import magic
 
 from .models import Gallery

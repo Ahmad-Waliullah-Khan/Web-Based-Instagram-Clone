@@ -1,12 +1,12 @@
-from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required, login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
+
 from gallery.models import Gallery
+
 from .forms import LoginForm
 
 

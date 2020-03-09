@@ -1,13 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
-from .utility_methods import get_file_path
-import magic
-from PIL import Image
-from resizeimage import resizeimage
-from io import StringIO
-from io import BytesIO
-from django.core.files.base import ContentFile
+from django.db import models
 from django_resized import ResizedImageField
+
+from .utility_methods import get_file_path
 
 
 #===============================================================================
