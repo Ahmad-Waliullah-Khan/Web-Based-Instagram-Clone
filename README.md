@@ -1,5 +1,5 @@
 ## Live App : https://django-advance-photos-app.herokuapp.com/
 
-id : guest
+id : **guest**
 
-password : admin@123456
+password : **admin@123456**
